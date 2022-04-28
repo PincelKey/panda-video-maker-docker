@@ -1,0 +1,23 @@
+version: '3.7'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: app
+    env_file: ./.env
+    restart: always
+    ports:
+      - ${NODE_LOCAL_PORT}:${NODE_DOCKER_PORT}
+    volumes:
+      - ./app:/app
+      - /app/node_modules
+    networks:
+      - app_red
+    stdin_open: true
+    tty: true
+
+networks:
+  app_red:
+    driver: bridge
